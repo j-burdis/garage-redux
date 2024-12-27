@@ -1,28 +1,43 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
+
 import { Provider } from 'react-redux';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { combineReducers } from 'redux';
+// import { createStore, combineReducers, applyMiddleware } from 'redux';
+// import logger from 'redux-logger';
 import reduxPromise from 'redux-promise';
-import logger from 'redux-logger';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { createHistory as history } from 'history';
+import { configureStore } from '@reduxjs/toolkit';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 
 import '../assets/stylesheets/application.scss';
+import logger from 'redux-logger';
 
-const reducers = combineReducers({
-  // key: reducer
+import carsReducer from './reducers/cars_reducer.js'
+
+const rootReducer = combineReducers({
+  cars: carsReducer,
 });
 
-const middlewares = applyMiddleware(reduxPromise, logger);
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(logger, reduxPromise),
+})
+
+const history = createBrowserHistory();
 
 // render an instance of the component in the DOM
-ReactDOM.render(
-  <Provider store={createStore(reducers, {}, middlewares)}>
+const container = document.getElementById('root');
+const root = createRoot(container);
+
+root.render(
+  <Provider store={store}>
     <Router history={history}>
-      <Switch>
-        TODO
-      </Switch>
+      <Routes>
+        <Route path="/" element={<h1>Welcome</h1>} />
+      </Routes>
     </Router>
   </Provider>,
-  document.getElementById('root')
 );
