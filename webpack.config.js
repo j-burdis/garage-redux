@@ -1,3 +1,4 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -6,23 +7,28 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
   },
-  devtool: 'sourcemap',
+  devtool: 'eval-source-map',
   devServer: { historyApiFallback: true },
   module: {
     rules: [
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        use: 'babel-loader'
       },
       {
         test: /\.s?css$/,
         exclude: /node_modules/,
-        loaders: [ 'style-loader', 'css-loader', 'sass-loader' ]
+        use: [ 'style-loader', 'css-loader', 'sass-loader' ]
       }
     ]
   },
   resolve: {
     extensions: [ '.js', '.jsx' ]
-  }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './public/index.html',  // Specify the location of the HTML template
+    }),
+  ]
 };
