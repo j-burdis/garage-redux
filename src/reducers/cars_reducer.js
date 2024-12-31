@@ -1,4 +1,4 @@
-import { FETCH_CARS } from "../actions";
+import { FETCH_CARS, CAR_CREATED } from "../actions";
 
 const initialState = []
 
@@ -13,6 +13,8 @@ const carsReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_CARS:
       return action.payload;
+    case CAR_CREATED:
+      return [...state, action.payload];
     default:
       return state;
   }

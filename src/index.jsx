@@ -7,14 +7,16 @@ import reduxPromise from 'redux-promise';
 // import { createStore, combineReducers, applyMiddleware } from 'redux';
 // import logger from 'redux-logger';
 import { configureStore } from '@reduxjs/toolkit';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
+import { reducer as formReducer } from 'redux-form'; 
 
 import '../assets/stylesheets/application.scss';
 import logger from 'redux-logger';
 
 import carsReducer from './reducers/cars_reducer.js'
 import CarsIndex from './containers/cars_index';
+import CarsNew from './containers/cars_new';
 
 // Get garage name from localStorage or prompt user
 const getGarageName = () => {
@@ -33,6 +35,7 @@ const garageName = getGarageName();
 const rootReducer = combineReducers({
   garage: (state = garageName, action) => state, 
   cars: carsReducer,
+  form: formReducer,
 });
 
 const store = configureStore({
@@ -47,6 +50,11 @@ const store = configureStore({
 
 const history = createBrowserHistory();
 
+const CarsNewWithNavigate = (props) => {
+  const navigate = useNavigate();
+  return <CarsNew navigate={navigate} {...props} />;
+};
+
 // render an instance of the component in the DOM
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -55,7 +63,8 @@ root.render(
   <Provider store={store}>
     <Router history={history}>
       <Routes>
-        <Route path="/" element={<CarsIndex />} />
+        <Route path="/" exact element={<CarsIndex />} />
+        <Route path="/cars/new" exact element={<CarsNewWithNavigate />} />
       </Routes>
     </Router>
   </Provider>,

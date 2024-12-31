@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchCars } from "../actions";
+import { Link } from "react-router-dom";
 
 class CarsIndex extends Component {
   componentDidMount() {
@@ -20,6 +21,10 @@ class CarsIndex extends Component {
             </li>
           ))}
         </ul>
+
+        <Link to="/cars/new">
+          <button className="btn btn-primary">Add New Car</button>
+        </Link>
       </div>
     );
   }
