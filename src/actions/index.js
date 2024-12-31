@@ -1,5 +1,6 @@
 // TODO: add and export your own actions
 export const FETCH_CARS = 'FETCH_CARS';
+export const FETCH_CAR = 'FETCH_CAR';
 export const CAR_CREATED = 'CAR_CREATED';
 
 export function createCar(garageName, body) {
@@ -13,6 +14,16 @@ export function createCar(garageName, body) {
     type: CAR_CREATED, 
     payload: request 
   }; 
+}
+
+export function fetchCar(id) {
+  const request = fetch(`https://garage.api.lewagon.com/${garageName}/cars/${id}`)
+    .then(response => response.json());
+
+  return {
+    type: FETCH_CAR,
+    payload: request
+  };
 }
 
 export function fetchCars(garageName) {

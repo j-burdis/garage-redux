@@ -17,6 +17,7 @@ import logger from 'redux-logger';
 import carsReducer from './reducers/cars_reducer.js'
 import CarsIndex from './containers/cars_index';
 import CarsNew from './containers/cars_new';
+import CarsShow from './containers/cars_show'
 
 // Get garage name from localStorage or prompt user
 const getGarageName = () => {
@@ -65,6 +66,7 @@ root.render(
       <Routes>
         <Route path="/" exact element={<CarsIndex />} />
         <Route path="/cars/new" exact element={<CarsNewWithNavigate />} />
+        <Route path="/cars/:id" exact element={<CarsShow />} />
       </Routes>
     </Router>
   </Provider>,

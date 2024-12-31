@@ -17,7 +17,9 @@ class CarsIndex extends Component {
         <ul>
           {cars.map((car) => (
             <li key={car.id}>
-              <strong>{car.brand} {car.model}</strong> - {car.owner} (Plate: {car.plate})
+              <Link to={`/cars/${car.id}`} >
+                <strong>{car.brand} {car.model}</strong> - {car.owner} (Plate: {car.plate})
+              </Link>
             </li>
           ))}
         </ul>
