@@ -15,8 +15,24 @@ import '../assets/stylesheets/application.scss';
 import logger from 'redux-logger';
 
 import carsReducer from './reducers/cars_reducer.js'
+import CarsIndex from './containers/cars_index';
+
+// Get garage name from localStorage or prompt user
+const getGarageName = () => {
+  const storedGarageName = localStorage.getItem("garageName");
+  if (storedGarageName) {
+    return storedGarageName;
+  } else {
+    const newGarageName = prompt("What is your garage?") || `garage${Math.floor(10 + (Math.random() * 90))}`;
+    localStorage.setItem("garageName", newGarageName);
+    return newGarageName;
+  }
+};
+
+const garageName = getGarageName();
 
 const rootReducer = combineReducers({
+  garage: (state = garageName, action) => state, 
   cars: carsReducer,
 });
 
@@ -36,7 +52,7 @@ root.render(
   <Provider store={store}>
     <Router history={history}>
       <Routes>
-        <Route path="/" element={<h1>Welcome</h1>} />
+        <Route path="/" element={<CarsIndex />} />
       </Routes>
     </Router>
   </Provider>,
