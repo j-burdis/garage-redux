@@ -1,12 +1,11 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
-
 import { Provider } from 'react-redux';
 import { combineReducers } from 'redux';
+import reduxPromise from 'redux-promise';
 // import { createStore, combineReducers, applyMiddleware } from 'redux';
 // import logger from 'redux-logger';
-import reduxPromise from 'redux-promise';
 import { configureStore } from '@reduxjs/toolkit';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
@@ -39,7 +38,11 @@ const rootReducer = combineReducers({
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(logger, reduxPromise),
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoreActions: ['FETCH_CARS'],
+      }
+    }).concat(logger, reduxPromise),
 })
 
 const history = createBrowserHistory();
