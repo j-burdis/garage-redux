@@ -16,8 +16,8 @@ export function createCar(garageName, body) {
   }; 
 }
 
-export function fetchCar(id) {
-  const request = fetch(`https://garage.api.lewagon.com/${garageName}/cars/${id}`)
+export function fetchCar(garageName, id) {
+  const request = fetch(`https://garage.api.lewagon.com/cars/${id}`)
     .then(response => response.json());
 
   return {
