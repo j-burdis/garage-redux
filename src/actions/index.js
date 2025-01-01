@@ -2,6 +2,7 @@
 export const FETCH_CARS = 'FETCH_CARS';
 export const FETCH_CAR = 'FETCH_CAR';
 export const CAR_CREATED = 'CAR_CREATED';
+export const CAR_DELETED = 'CAR_DELETED';
 
 export function createCar(garageName, body) {
   const request = fetch(`https://garage.api.lewagon.com/${garageName}/cars`, {
@@ -36,5 +37,22 @@ export function fetchCars(garageName) {
   return {
     type: FETCH_CARS,
     payload: request
+  };
+}
+
+export function deleteCar(id) {
+  const request = fetch(`https://garage.api.lewagon.com/cars/${id}`, {
+    method: 'DELETE',
+  })
+    // .then((response) => {
+    //   if (!response.ok) {
+    //     throw new Error('Failed to delete the car.');
+    //   }
+    //   return id; // Return the deleted car ID
+    // });
+
+  return {
+    type: CAR_DELETED,
+    payload: request.then(() => id),
   };
 }

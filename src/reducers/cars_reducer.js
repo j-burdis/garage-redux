@@ -1,4 +1,4 @@
-import { FETCH_CARS, FETCH_CAR, CAR_CREATED } from "../actions";
+import { FETCH_CARS, FETCH_CAR, CAR_CREATED, CAR_DELETED } from "../actions";
 
 const initialState = []
 
@@ -17,6 +17,8 @@ const carsReducer = (state = initialState, action) => {
       return [ action.payload ];
     case CAR_CREATED:
       return [...state, action.payload];
+    case CAR_DELETED:
+      return state.filter((car) => car.id !== action.payload);
     default:
       return state;
   }

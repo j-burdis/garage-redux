@@ -1,8 +1,8 @@
 import React, { Component, useEffect } from 'react'; 
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
-import { fetchCar } from '../actions';
+import { deleteCar, fetchCar } from '../actions';
 
 // class CarsShow extends Component { 
 //   componentDidMount() { 
@@ -31,6 +31,7 @@ import { fetchCar } from '../actions';
 
 const CarsShow = ({ car, fetchCar }) => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
 
@@ -38,6 +39,14 @@ const CarsShow = ({ car, fetchCar }) => {
       fetchCar(id);
     }
   }, [id, car, fetchCar]);
+
+  const handleDelete = () => {
+    deleteCar(id)
+    navigate('/'); // Navigate back to index after deletion
+    };
+    // .catch((error) => {
+    //   console.error('Error deleting car:', error.message);
+    // });
 
   if (!car) {
     return <p>Loading...</p>
@@ -48,6 +57,9 @@ const CarsShow = ({ car, fetchCar }) => {
       <div className="car-item">
         <h3>{car.brand}</h3>
         <p>{car.model}</p>
+        <button className="btn btn-danger" onClick={handleDelete}>
+          Delete Car
+        </button>
       </div>
       <Link to="/">Back</Link>
     </div>
@@ -73,4 +85,4 @@ function mapStateToProps(state) {
 //   return bindActionCreators({ fetchCar }, dispatch); 
 // }
 
-export default connect(mapStateToProps, { fetchCar })(CarsShow);
+export default connect(mapStateToProps, { fetchCar, deleteCar })(CarsShow);
