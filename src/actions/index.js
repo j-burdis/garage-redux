@@ -44,12 +44,6 @@ export function deleteCar(id) {
   const request = fetch(`https://garage.api.lewagon.com/cars/${id}`, {
     method: 'DELETE',
   })
-    // .then((response) => {
-    //   if (!response.ok) {
-    //     throw new Error('Failed to delete the car.');
-    //   }
-    //   return id; // Return the deleted car ID
-    // });
 
   return {
     type: CAR_DELETED,

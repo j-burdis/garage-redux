@@ -34,8 +34,7 @@ class CarsNew extends Component {
             name="brand" 
             type="text" 
             component={this.renderField} 
-          /> 
-        {/* <label htmlFor="content">Content</label>  */}
+          />
           <Field 
             label="Model" 
             name="model" 
